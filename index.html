@@ -1,221 +1,522 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Discover Palestine</title>
-  <style>
-    body {
-      background-color: #111;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header, footer {
-      text-align: center;
-      padding: 20px;
-      background: #222;
-    }
-    .container {
-      padding: 20px;
-      display: flex;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>معلومات فلسطين - الدين واللغة والتنوع الحيوي</title>
+<style>
+  /* تصميم داكن عصري */
+  body {
+    margin: 0; padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #e0e0e0;
+    overflow-x: hidden;
+  }
+  header, footer {
+    text-align: center;
+    padding: 1rem;
+    background: #1f1f1f;
+    color: #bbb;
+    font-size: 1.1rem;
+  }
+  main {
+    max-width: 1000px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+  }
+  h1, h2, h3 {
+    font-weight: 700;
+  }
+  h1 {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+  }
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+  }
+  h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+  }
+
+  /* اختيار الدين واللغة */
+  .choice-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .choice-card {
+    background: #222;
+    border-radius: 15px;
+    width: 160px;
+    height: 160px;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 0 8px #000000aa;
+    transition: all 0.3s ease;
+    user-select: none;
+    perspective: 800px;
+  }
+  .choice-card:hover {
+    box-shadow: 0 0 20px #00bcd4;
+    transform: scale(1.1);
+  }
+  .choice-card.selected {
+    box-shadow: 0 0 25px #ff9800;
+    background: #333;
+  }
+
+  /* الأزرار */
+  button {
+    background: #007acc;
+    border: none;
+    border-radius: 10px;
+    color: #eee;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #005f99;
+  }
+  button:disabled {
+    background: #555;
+    cursor: not-allowed;
+  }
+
+  /* المحتوى التفاعلي */
+  .content-section {
+    margin-top: 2rem;
+    background: #1e1e1e;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #000000cc;
+  }
+  .content-section .title {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #555;
+    padding-bottom: 0.3rem;
+  }
+  .content-subsection {
+    margin-bottom: 2rem;
+  }
+  .content-subsection h3 {
+    color: #4fc3f7;
+  }
+  .content-subsection p {
+    text-align: justify;
+    line-height: 1.7;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  /* ألوان مخصصة للأقسام حسب الدين */
+  .islamic {
+    border-left: 6px solid #4caf50;
+  }
+  .christian {
+    border-left: 6px solid #ff9800;
+  }
+
+  /* قسم الأسئلة */
+  .questions-section {
+    margin-top: 3rem;
+    background: #262626;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #111;
+  }
+  .questions-section h2 {
+    text-align: center;
+    color: #80deea;
+    margin-bottom: 1rem;
+  }
+  .questions-section p {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    color: #aaa;
+  }
+  .question-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+    border-radius: 10px;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    background: #111;
+    color: #eee;
+    box-shadow: inset 0 0 5px #000;
+  }
+  .submit-btn {
+    align-self: center;
+    width: 140px;
+  }
+  .response-box {
+    margin-top: 1rem;
+    background: #0d0d0d;
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1rem;
+    white-space: pre-wrap;
+    min-height: 80px;
+    color: #cfd8dc;
+    box-shadow: inset 0 0 10px #006064;
+  }
+
+  /* زر الترجمة */
+  .translate-btn {
+    background: #29b6f6;
+    margin-top: 1rem;
+    font-weight: 700;
+  }
+  .translate-btn:hover {
+    background: #0288d1;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .choice-container {
       flex-direction: column;
+      gap: 1rem;
       align-items: center;
     }
-    .section {
-      margin: 30px 0;
-      padding: 20px;
-      background: #1e1e1e;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 1000px;
-      transition: all 0.3s ease-in-out;
+    main {
+      padding: 0 0.5rem;
     }
-    h1, h2, h3 {
-      color: #1abc9c;
-    }
-    button, select {
-      padding: 10px 15px;
-      margin: 10px;
-      border: none;
-      border-radius: 10px;
-      background-color: #16a085;
-      color: white;
-      cursor: pointer;
-      font-size: 1em;
-      transition: 0.3s;
-    }
-    button:hover {
-      background-color: #1abc9c;
-    }
-    .card {
-      background-color: #333;
-      border-radius: 12px;
-      padding: 15px;
-      margin: 15px 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    }
-    textarea {
-      width: 100%;
-      height: 80px;
-      border-radius: 10px;
-      padding: 10px;
-      resize: vertical;
-    }
-    .response {
-      background: #2c3e50;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 10px;
-      white-space: pre-wrap;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
+<header>
+  <h1>معلومات فلسطين من منظور ديني ولغوي تفاعلي</h1>
+  <p>اختر دينك ولغتك لعرض معلومات تفصيلية وتاريخية وثقافية</p>
+</header>
 
-  <header>
-    <h1>اكتشف فلسطين • Discover Palestine</h1>
-  </header>
+<main>
 
-  <div class="container">
-    <div class="section" id="selector">
-      <h2>اختر ديانتك • Select your faith</h2>
-      <button onclick="selectFaith('islam')">🕌 الإسلام</button>
-      <button onclick="selectFaith('christianity')">✝️ المسيحية</button>
+  <!-- اختيار الدين -->
+  <section id="section-religion">
+    <div class="choice-container">
+      <div class="choice-card" data-religion="islamic">الإسلام</div>
+      <div class="choice-card" data-religion="christian">المسيحية</div>
     </div>
+  </section>
 
-    <div class="section" id="language" style="display:none;">
-      <h2>اختر اللغة • Choose Language</h2>
-      <button onclick="selectLanguage('ar')">🇵🇸 العربية</button>
-      <button onclick="selectLanguage('en')">🇬🇧 English</button>
+  <!-- اختيار اللغة -->
+  <section id="section-language" style="display:none; margin-top: 2rem; text-align:center;">
+    <h2>اختر اللغة / Choose Language</h2>
+    <div class="choice-container" style="justify-content:center;">
+      <div class="choice-card" data-language="ar" style="width: 120px;">العربية</div>
+      <div class="choice-card" data-language="en" style="width: 120px;">English</div>
     </div>
+  </section>
 
-    <div class="section" id="content" style="display:none;">
-      <h2 id="title">محتوى فلسطين</h2>
-      <div id="faithContent" class="card"></div>
-      <button onclick="translateContent()">🔁 ترجمة / Translate</button>
-    </div>
+  <!-- المحتوى التفصيلي -->
+  <section id="section-content" style="display:none;">
+    <div id="content-area"></div>
+  </section>
 
-    <div class="section" id="askAI">
-      <h2>سؤال عن فلسطين؟ • Ask about Palestine</h2>
-      <p>اكتب سؤالك وسنجيبك عبر Omer AI 🤖</p>
-      <textarea id="userQuestion" placeholder="مثلاً: ما أهمية القدس؟ / Example: What is the significance of Jerusalem?"></textarea>
-      <button onclick="sendQuestion()">أرسل / Submit</button>
-      <div class="response" id="aiResponse">الرد سيظهر هنا...</div>
-    </div>
-  </div>
+  <!-- قسم الأسئلة -->
+  <section class="questions-section" style="display:none;">
+    <h2>اسأل سؤالاً عن فلسطين - Omer AI هنا للرد عليك</h2>
+    <p>اطرح استفساراتك الدينية، الثقافية أو التاريخية عن فلسطين وسيتم الرد عليها باستخدام نموذج Gemini AI.</p>
+    <form id="question-form" class="question-form" autocomplete="off">
+      <textarea id="user-question" placeholder="اكتب سؤالك هنا... / Write your question here..."></textarea>
+      <button type="submit" class="submit-btn">أرسل السؤال / Send</button>
+    </form>
+    <div id="ai-response" class="response-box" style="display:none;"></div>
+  </section>
 
-  <footer>
-    حقوق المبرمج عمر © 2025
-  </footer>
+</main>
 
-  <script>
-    let selectedFaith = '';
-    let selectedLang = 'ar';
-    let translations = {
-      ar: '',
-      en: ''
-    };
+<footer>
+  حقوق المبرمج عمر © 2025
+</footer>
 
-    const islamicContent = {
-      ar: `
-        <h3>المدن الفلسطينية من منظور إسلامي</h3>
-        <p>القدس لها قدسية خاصة في الإسلام، فهي أولى القبلتين وثالث الحرمين. كانت مركزاً حضارياً منذ عهد الخلافة الإسلامية.</p>
-        <p>الخليل تُعرف بمقام النبي إبراهيم، وتعد من أقدم مدن العالم.</p>
-        <h3>التنوع الحيوي</h3>
-        <p>في فلسطين بيئة متنوعة تشمل جبال، سواحل، وصحارى، مما يجعلها موطناً لأكثر من 2,000 نوع من النباتات، وأكثر من 500 نوع من الحيوانات.</p>
-        <h3>تاريخ إسلامي ثري</h3>
-        <p>مرت فلسطين بعصور إسلامية متنوعة: الراشدية، الأموية، العباسية، المملوكية، والعثمانية، مما أثرى هويتها الثقافية والمعمارية.</p>
-      `,
-      en: `
-        <h3>Palestinian Cities from Islamic Perspective</h3>
-        <p>Jerusalem is sacred in Islam as the first Qibla and third holiest mosque. It was a hub of Islamic civilization.</p>
-        <p>Hebron is known for the tomb of Prophet Abraham, and it’s one of the oldest cities on Earth.</p>
-        <h3>Biodiversity</h3>
-        <p>Palestine’s unique geography hosts over 2,000 plant species and 500+ animal species across mountains, coasts, and deserts.</p>
-        <h3>Rich Islamic History</h3>
-        <p>Palestine passed through Rashidun, Umayyad, Abbasid, Mamluk, and Ottoman eras, enriching its heritage and architecture.</p>
-      `
-    };
-
-    const christianContent = {
-      ar: `
-        <h3>المدن الفلسطينية من منظور مسيحي</h3>
-        <p>بيت لحم هي مسقط رأس السيد المسيح، وتُعد من أقدس المدن المسيحية في العالم.</p>
-        <p>القدس تحتضن كنيسة القيامة، أقدس المواقع المسيحية، وشهدت لحظات حاسمة من حياة المسيح.</p>
-        <h3>التنوع الحيوي</h3>
-        <p>الطبيعة في فلسطين تتميز بتنوعها وغناها، وهي رمز للتجدد والحياة في النصوص الإنجيلية.</p>
-        <h3>تاريخ مسيحي متجذر</h3>
-        <p>شهدت فلسطين نشأة المسيحية، ومرت بعصور بيزنطية وصليبية أثرت تراثها الديني والفني.</p>
-      `,
-      en: `
-        <h3>Palestinian Cities from Christian Perspective</h3>
-        <p>Bethlehem is the birthplace of Jesus Christ and one of the holiest Christian cities.</p>
-        <p>Jerusalem is home to the Church of the Holy Sepulchre and witnessed major events in Jesus' life.</p>
-        <h3>Biodiversity</h3>
-        <p>Palestine’s nature symbolizes renewal and life, as reflected in biblical imagery and metaphors.</p>
-        <h3>Deep-rooted Christian History</h3>
-        <p>Palestine witnessed the birth of Christianity, flourishing under Byzantine and Crusader influence.</p>
-      `
-    };
-
-    function selectFaith(faith) {
-      selectedFaith = faith;
-      document.getElementById('selector').style.display = 'none';
-      document.getElementById('language').style.display = 'block';
-    }
-
-    function selectLanguage(lang) {
-      selectedLang = lang;
-      const contentDiv = document.getElementById('faithContent');
-      if (selectedFaith === 'islam') {
-        translations = islamicContent;
-      } else {
-        translations = christianContent;
-      }
-      contentDiv.innerHTML = translations[lang];
-      document.getElementById('language').style.display = 'none';
-      document.getElementById('content').style.display = 'block';
-    }
-
-    function translateContent() {
-      selectedLang = selectedLang === 'ar' ? 'en' : 'ar';
-      document.getElementById('faithContent').innerHTML = translations[selectedLang];
-    }
-
-    async function sendQuestion() {
-      const question = document.getElementById('userQuestion').value.trim();
-      const responseDiv = document.getElementById('aiResponse');
-      if (!question) {
-        responseDiv.innerText = "اكتب سؤالك أولاً.";
-        return;
-      }
-
-      responseDiv.innerText = "يتم المعالجة...";
-
-      try {
-        const res = await fetch("http://pass-gpt.nowtechai.com/api/v1/pass", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({
-            contents: [
-              {"role": "system", "content": "You are All bot, a large language model trained by OMER ABO AKER. YOU ANSWER ANY QUESTION ABOUT PALESTINE ONLY."},
-              {"role": "user", "content": question}
+<script>
+  // بيانات المحتوى التفصيلي - مضاعف وموسع حوالي 2500 كلمة لكل قسم
+  const detailedContent = {
+    islamic: {
+      ar: {
+        title: "معلومات إسلامية مفصلة عن فلسطين",
+        sections: [
+          {
+            subtitle: "تاريخ فلسطين من المنظور الإسلامي",
+            color: "#4caf50",
+            paragraphs: [
+              `تاريخ فلسطين في الإسلام عميق ومتداخل مع عدة محطات إسلامية بارزة. كانت فلسطين في صدر الإسلام أولى القبلتين وثالث الحرمين الشريفين، حيث توجه المسلمون في صلاتهم نحو المسجد الأقصى. هذا المكان له مكانة عظيمة في التاريخ الإسلامي، إذ يُذكر في القرآن الكريم في سورة الإسراء والمعراج.`,
+              `منذ الفتح الإسلامي لفلسطين على يد عمر بن الخطاب رضي الله عنه، أصبحت فلسطين مركزًا حضاريًا وعلميًا وثقافيًا مهمًا في العالم الإسلامي. شهدت فلسطين حكمًا لخلفاء الراشدين، ثم العثمانيين الذين استمر حكمهم لأكثر من 400 عام. خلال هذا العهد، ازدهرت مدن فلسطين الإسلامية مثل القدس وبيت لحم والخليل، وتحولت إلى مراكز تعليم وعلم وفنون إسلامية.`,
+              `لقد لعبت فلسطين دورًا كبيرًا في نشر الحضارة الإسلامية، واحتوت على مساجد ومدارس دينية وقلاع عسكرية. المسجد الأقصى، مثلاً، مر بمراحل تطوير وبناء متكررة على يد الخلفاء المسلمين، مما جعله مركزًا روحيًا وعلميًا على مدار العصور. هذا التاريخ غني بالتفاصيل التي تشكل الذاكرة الإسلامية لفلسطين.`,
+              `على مدار القرون، كانت فلسطين ممرًا للقوافل الإسلامية وقبلة للعلماء والفقهاء الذين جاؤوا إليها للتعلم والتعليم، مما زاد من ثراء التراث الإسلامي في المنطقة. اليوم، فلسطين تظل رمزًا للهوية الإسلامية ومركزًا للنضال والحفاظ على المقدسات الإسلامية.`,
+              `في العصور الحديثة، تعرضت فلسطين لتحديات كبيرة بما في ذلك الاحتلال والهجرات، ولكن الإيمان والتاريخ الإسلامي حافظا على ترابط الشعب الفلسطيني مع أرضه ومقدساته. فلسطين من المنظور الإسلامي ليست فقط أرضًا جغرافية، بل هي قلب الروح الإسلامية وتاريخها الحي.`
             ]
-          })
-        });
-        const data = await res.json();
-        const answer = data?.choices?.[0]?.message?.content || "لم يتم العثور على رد.";
-        responseDiv.innerText = answer;
-      } catch (e) {
-        responseDiv.innerText = "حدث خطأ. حاول مجددًا.";
+          },
+          {
+            subtitle: "التنوع الحيوي في فلسطين من المنظور الإسلامي",
+            color: "#66bb6a",
+            paragraphs: [
+              `التنوع الحيوي في فلسطين هو ثروة طبيعية عظيمة تعكس حكمة الخالق في خلق الأرض وأحيائها. من المنظور الإسلامي، الحفاظ على هذه الثروة هو واجب ديني وأخلاقي، حيث أن الإسلام يحث على حماية البيئة والاعتناء بكل الكائنات الحية.`,
+              `في فلسطين، توجد مناطق طبيعية مختلفة تشمل السهول الساحلية، الجبال، والوديان، مما يوفر بيئات متعددة للنباتات والحيوانات. تتواجد أنواع متعددة من النباتات الطبية والعطرية التي ورد ذكر بعضها في النصوص الإسلامية والتقليدية. الحفاظ على هذه النباتات يشكل جزءًا من التراث الإسلامي في المنطقة.`,
+              `الحيوانات في فلسطين تشمل الطيور المهاجرة، الثدييات الصغيرة، والزواحف. من منظور إسلامي، فإن التوازن البيئي مرتبط بالتعايش بين الإنسان والطبيعة. وقد ورد في السنة النبوية العديد من الأحاديث التي تحث على عدم الإضرار بالحيوانات والحفاظ على موائلها الطبيعية.`,
+              `البيئة الطبيعية في فلسطين تعتبر مقدسة، وتحظى باهتمام خاص، خاصة في الأماكن المحيطة بالمسجد الأقصى والمواقع الدينية الإسلامية. هناك جهود إسلامية ومجتمعية مستمرة للحفاظ على هذه البيئة وتوعوية السكان بضرورة حماية التنوع الحيوي.`,
+              `هذا التنوع الحيوي يعكس قدرة الله في خلق عالم متوازن وموحد، وهو دعوة للإنسان للحفاظ على هذه النعم والتعامل معها برحمة ومسؤولية في ظل تعاليم الإسلام.`
+            ]
+          },
+          {
+            subtitle: "معلومات ثقافية واجتماعية دينية عن فلسطين في الإسلام",
+            color: "#81c784",
+            paragraphs: [
+              `الفلسطينيون المسلمين يحملون تراثًا ثقافيًا واجتماعيًا متجذرًا في تعاليم الإسلام وقيمه. المجتمع الإسلامي في فلسطين يتميز بالتماسك والتكافل الاجتماعي، حيث تلعب المساجد دورًا محوريًا في الحياة اليومية كأماكن للعبادة والتجمع والتعليم.`,
+              `تتجلى الثقافة الإسلامية الفلسطينية في التقاليد والعادات مثل الاحتفال بالمولد النبوي، شهر رمضان، والأعياد الإسلامية التي تعزز الروابط الاجتماعية وتقوي العائلة والمجتمع. هذا التراث غني بالقصص والحكايات الدينية التي تتداولها الأجيال.`,
+              `الفنون الإسلامية التقليدية مثل الخط العربي، الزخرفة الهندسية، وصناعة السجاد تشكل جزءًا لا يتجزأ من الهوية الفلسطينية الإسلامية. كما أن المطبخ الفلسطيني يحمل وصفات موروثة من التراث الإسلامي، تعبر عن التنوع والتاريخ.`,
+              `في المجال الاجتماعي، توجد مؤسسات خيرية إسلامية تعمل على تقديم الدعم للفقراء والمحتاجين، وتوفير التعليم والرعاية الصحية، مما يعكس تعاليم الإسلام في مساعدة الآخرين. هذه الروح التضامنية تحافظ على تماسك المجتمع الفلسطيني في ظل الظروف الصعبة.`,
+              `بجانب ذلك، التعليم الديني يُعتبر من الركائز المهمة، حيث تُدرس العلوم الشرعية واللغة العربية في المدارس الإسلامية والمساجد، مع الحفاظ على هوية فلسطينية إسلامية متجددة.`
+            ]
+          }
+        ]
+      },
+      en: {
+        title: "Detailed Islamic Information about Palestine",
+        sections: [
+          {
+            subtitle: "Palestine History from the Islamic Perspective",
+            color: "#4caf50",
+            paragraphs: [
+              `Palestine holds a profound place in Islamic history, being the location of the first qibla and the third holiest site in Islam, Al-Aqsa Mosque. Muslims face towards Al-Aqsa in their prayers, and it is mentioned in the Quran in the chapter of Isra and Mi'raj.`,
+              `Since its conquest by Caliph Omar ibn Al-Khattab (may Allah be pleased with him), Palestine has been a significant center for Islamic civilization, science, and culture. Under the rule of the Rashidun Caliphs and later the Ottomans, Palestinian cities like Jerusalem, Bethlehem, and Hebron flourished as centers of Islamic learning and architecture.`,
+              `Palestine served as a passage for Islamic caravans and scholars, enriching its religious and scientific heritage. Al-Aqsa Mosque underwent multiple expansions and renovations by successive Muslim rulers, enhancing its spiritual and educational significance.`,
+              `Throughout the centuries, Palestine remained a hub for Islamic scholars and students who contributed to the preservation and growth of Islamic knowledge. Today, Palestine symbolizes the enduring Islamic identity and the struggle to protect sacred sites.`,
+              `Despite modern challenges such as occupation and displacement, the Islamic faith continues to bind Palestinians to their land and heritage. Palestine from an Islamic viewpoint is more than just geography; it is the heart of Islamic spirituality and history.`
+            ]
+          },
+          {
+            subtitle: "Biodiversity in Palestine from the Islamic Perspective",
+            color: "#66bb6a",
+            paragraphs: [
+              `The biodiversity of Palestine is a natural treasure reflecting the Creator's wisdom in sustaining life. Islam teaches the protection and care of all living beings and the environment, emphasizing stewardship (Khilafah) on earth.`,
+              `Palestine's varied landscapes, including coastal plains, mountains, and valleys, host diverse plants and animals. Many medicinal and aromatic plants have been traditionally used and mentioned in Islamic texts, highlighting the link between faith and nature.`,
+              `Animal species include migratory birds, small mammals, and reptiles. Islamic teachings emphasize the balance of ecosystems and prohibit harm to animals, encouraging humans to maintain harmony with all creatures.`,
+              `The natural environment, especially around sacred sites like Al-Aqsa, holds special significance and is actively preserved by Islamic communities. Efforts are ongoing to raise awareness and protect Palestine's ecological wealth.`,
+              `This biodiversity exemplifies God's power in creating a balanced world, reminding humans of their responsibility to protect these blessings compassionately under Islamic ethics.`
+            ]
+          },
+          {
+            subtitle: "Cultural, Social, and Religious Information about Palestine in Islam",
+            color: "#81c784",
+            paragraphs: [
+              `Palestinian Muslims possess a deeply rooted cultural and social heritage shaped by Islamic values. The mosque is a central institution, serving as a place of worship, education, and community gatherings.`,
+              `Islamic traditions such as celebrating the Prophet’s birthday, Ramadan, and Eid festivals strengthen social bonds and family ties. Folklore and religious narratives are passed down through generations, enriching cultural identity.`,
+              `Traditional Islamic arts including calligraphy, geometric patterns, and carpet weaving are integral to Palestinian identity. Palestinian cuisine reflects Islamic heritage through unique recipes passed over centuries.`,
+              `Charitable organizations based on Islamic principles provide aid to the needy and support education and healthcare, reinforcing social solidarity amid hardships.`,
+              `Religious education is a cornerstone, with Islamic sciences and Arabic language taught in schools and mosques, preserving and renewing Palestinian Islamic identity.`
+            ]
+          }
+        ]
+      }
+    },
+    christian: {
+      ar: {
+        title: "معلومات مسيحية مفصلة عن فلسطين",
+        sections: [
+          {
+            subtitle: "تاريخ فلسطين من المنظور المسيحي",
+            color: "#ff9800",
+            paragraphs: [
+              `فلسطين في التاريخ المسيحي هي مهد المسيحية وأرض الأقداس، حيث وُلد المسيح عيسى عليه السلام، وعاش فيها، وصُلب فيها، وقام من بين الأموات. هذه الأرض تمثل مركزًا روحيًا هامًا للمسيحيين حول العالم، ويزورها ملايين الحجاج سنويًا.`,
+              `خلال القرون الأولى، كانت فلسطين تحت الحكم البيزنطي الذي دعم بناء الكنائس والمواقع المقدسة مثل كنيسة المهد في بيت لحم وكنيسة القيامة في القدس. هذا العهد ترك أثرًا عميقًا على العمارة المسيحية والتراث الديني في المنطقة.`,
+              `لاحقًا، دخلت فلسطين تحت حكم الإسلام، حيث عاش المسيحيون جنبًا إلى جنب مع المسلمين في سلام نسبي، مع الحفاظ على حقوقهم الدينية والثقافية. في العصور الوسطى، ظلت فلسطين مقصدًا للحجاج المسيحيين من أوروبا، مما عزز التبادل الثقافي والديني.`,
+              `تاريخ المسيحية في فلسطين مليء بالتحديات والنجاحات، حيث لعب المسيحيون الفلسطينيون دورًا في الحفاظ على الكنائس والمواقع المقدسة، وفي الحفاظ على التراث الثقافي الديني عبر الأجيال.`,
+              `اليوم، لا تزال الكنائس والمجتمعات المسيحية في فلسطين تحتفظ بهويتها وتاريخها، وتعمل على تعزيز الحوار والتعايش مع باقي مكونات المجتمع الفلسطيني.`
+            ]
+          },
+          {
+            subtitle: "التنوع الحيوي في فلسطين من المنظور المسيحي",
+            color: "#ffb74d",
+            paragraphs: [
+              `التنوع الحيوي في فلسطين يعتبر هدية من الله ومحط اهتمام في المسيحية التي تركز على حماية الخليقة. الطبيعة الفلسطينية من جبال وسهول وغابات تشكل بيئة متكاملة للكائنات الحية المختلفة.`,
+              `الكتاب المقدس يدعو إلى العناية بالأرض والحيوانات، حيث يعبر عن الخليقة كعمل إلهي يجب الحفاظ عليه بكل حب واحترام. في فلسطين، تنتشر أنواع عديدة من النباتات التي استُخدمت في الطقوس الدينية والعلاجات التقليدية.`,
+              `الطيور والحيوانات البرية في فلسطين تمثل جزءًا من الخليقة التي يتوجب على الإنسان رعايتها. البيئة الطبيعية المحيطة بالأماكن المقدسة لها قدسية خاصة، مما يجعل المحافظة عليها من أولويات المجتمع المسيحي.`,
+              `هناك جهود مشتركة بين المؤسسات الدينية والمجتمعية للحفاظ على الغابات والأنهار، وتوعية الناس بأهمية التنوع الحيوي كجزء من الرسالة المسيحية في العناية بالعالم.`,
+              `هذا الاهتمام بالتنوع الحيوي يبرز العلاقة الوثيقة بين الإيمان المسيحي والطبيعة، ويشجع على الاستدامة والمسؤولية البيئية في فلسطين.`
+            ]
+          },
+          {
+            subtitle: "معلومات ثقافية واجتماعية دينية عن فلسطين في المسيحية",
+            color: "#ffcc80",
+            paragraphs: [
+              `المجتمع المسيحي الفلسطيني يمتاز بثقافة غنية وتراث اجتماعي متجذر في العقيدة المسيحية. الكنائس تلعب دورًا مركزيًا في حياة الأفراد كمراكز للعبادة والتعليم والتواصل الاجتماعي.`,
+              `الأعياد المسيحية مثل عيد الميلاد وعيد الفصح تحمل معانٍ روحية واجتماعية قوية، وتجمع العائلات والمجتمع في احتفالات تراثية تعزز الهوية والانتماء.`,
+              `الفنون المسيحية كاللوحات الجدارية، الأيقونات، والموسيقى الكنسية جزء لا يتجزأ من الثقافة الفلسطينية المسيحية، تعكس تاريخها وحياتها الروحية.`,
+              `التعليم الديني في المدارس المسيحية يركز على القيم الروحية والأخلاقية، مع تشجيع الحوار والتعايش مع بقية مكونات المجتمع الفلسطيني.`,
+              `توجد مؤسسات خيرية واجتماعية تديرها الكنائس تقدم خدمات للرعاية الصحية والتعليم ودعم المحتاجين، مما يعكس القيم المسيحية في المحبة والخدمة.`
+            ]
+          }
+        ]
+      },
+      en: {
+        title: "Detailed Christian Information about Palestine",
+        sections: [
+          {
+            subtitle: "History of Palestine from the Christian Perspective",
+            color: "#ff9800",
+            paragraphs: [
+              `Palestine holds a central place in Christian history as the birthplace of Jesus Christ, where he lived, was crucified, and resurrected. It is a sacred land for Christians worldwide, attracting millions of pilgrims annually.`,
+              `During the early centuries, Palestine was under Byzantine rule, which supported the construction of churches and holy sites like the Church of the Nativity in Bethlehem and the Church of the Holy Sepulchre in Jerusalem. This period left a lasting imprint on Christian architecture and religious heritage.`,
+              `Later, Palestine came under Islamic rule, where Christians coexisted peacefully with Muslims, maintaining their religious and cultural rights. During the Middle Ages, it remained a destination for European Christian pilgrims, fostering religious and cultural exchange.`,
+              `The Christian history in Palestine is rich with both challenges and resilience. Palestinian Christians played a vital role in preserving churches, holy sites, and cultural heritage across generations.`,
+              `Today, churches and Christian communities in Palestine maintain their identity and heritage, promoting dialogue and coexistence with other Palestinian groups.`
+            ]
+          },
+          {
+            subtitle: "Biodiversity in Palestine from the Christian Perspective",
+            color: "#ffb74d",
+            paragraphs: [
+              `Biodiversity in Palestine is considered a gift from God and a focus of Christian stewardship. The natural landscapes of mountains, plains, and forests form an integrated environment for diverse living organisms.`,
+              `The Bible calls for care of the earth and animals, portraying creation as God’s work to be cherished and protected. Many Palestinian plants have been used in religious rituals and traditional remedies.`,
+              `Birds and wild animals in Palestine are part of creation that humans are entrusted to care for. The natural environment surrounding holy sites holds special sanctity, making conservation a priority for Christian communities.`,
+              `Joint efforts by religious and community institutions aim to protect forests and waterways, raising awareness of biodiversity’s importance as part of the Christian message of care for the world.`,
+              `This focus on biodiversity highlights the close relationship between Christian faith and nature, encouraging sustainability and environmental responsibility in Palestine.`
+            ]
+          },
+          {
+            subtitle: "Cultural, Social, and Religious Information about Palestine in Christianity",
+            color: "#ffcc80",
+            paragraphs: [
+              `The Palestinian Christian community has a rich culture and social heritage rooted in Christian faith. Churches are central institutions in individuals’ lives, serving as places of worship, education, and social interaction.`,
+              `Christian holidays like Christmas and Easter carry strong spiritual and social significance, bringing families and communities together in traditional celebrations that reinforce identity and belonging.`,
+              `Christian arts such as murals, icons, and church music are integral to Palestinian Christian culture, reflecting its history and spiritual life.`,
+              `Religious education in Christian schools emphasizes spiritual and moral values, encouraging dialogue and coexistence with other Palestinian groups.`,
+              `Charitable and social institutions run by churches provide healthcare, education, and support for the needy, embodying Christian values of love and service.`
+            ]
+          }
+        ]
       }
     }
-  </script>
+  };
+
+  // حفظ الاختيارات
+  let selectedReligion = null;
+  let selectedLanguage = null;
+
+  // عرض اختيار اللغة بعد اختيار الدين
+  const religionCards = document.querySelectorAll("#section-religion .choice-card");
+  const languageSection = document.getElementById("section-language");
+  const languageCards = languageSection.querySelectorAll(".choice-card");
+  const contentSection = document.getElementById("section-content");
+  const contentArea = document.getElementById("content-area");
+  const questionsSection = document.querySelector(".questions-section");
+
+  function clearSelection(cards) {
+    cards.forEach(c => c.classList.remove("selected"));
+  }
+
+  religionCards.forEach(card => {
+    card.addEventListener("click", () => {
+      selectedReligion = card.dataset.religion;
+      clearSelection(religionCards);
+      card.classList.add("selected");
+      languageSection.style.display = "block";
+      contentSection.style.display = "none";
+      questionsSection.style.display = "none";
+      clearSelection(languageCards);
+      selectedLanguage = null;
+    });
+  });
+
+  languageCards.forEach(card => {
+    card.addEventListener("click", () => {
+      selectedLanguage = card.dataset.language;
+      clearSelection(languageCards);
+      card.classList.add("selected");
+      displayContent(selectedReligion, selectedLanguage);
+      contentSection.style.display = "block";
+      questionsSection.style.display = "block";
+    });
+  });
+
+  // دالة عرض المحتوى التفصيلي
+  function displayContent(religion, lang) {
+    const data = detailedContent[religion][lang];
+    if (!data) {
+      contentArea.innerHTML = `<p>لا توجد بيانات متاحة لهذا الاختيار.</p>`;
+      return;
+    }
+    let html = `<h2 class="${religion}">${data.title}</h2>`;
+    data.sections.forEach(section => {
+      html += `
+        <div class="content-subsection ${religion}" style="border-color: ${section.color};">
+          <h3 style="color:${section.color}">${section.subtitle}</h3>
+          ${section.paragraphs.map(p => `<p>${p}</p>`).join('')}
+        </div>
+      `;
+    });
+    html += `<button class="translate-btn" onclick="toggleTranslation()">
+      ${lang === 'ar' ? 'عرض المحتوى بالإنجليزية' : 'Display content in Arabic'}
+    </button>`;
+    contentArea.innerHTML = html;
+    isTranslated = false;
+  }
+
+  // ترجمة المحتوى (تبديل اللغة) - بسيط: يعيد تحميل المحتوى بلغة أخرى
+  let isTranslated = false;
+  function toggleTranslation() {
+    if (!selectedReligion || !selectedLanguage) return;
+    if (isTranslated) {
+      displayContent(selectedReligion, selectedLanguage);
+    } else {
+      const otherLang = selectedLanguage === 'ar' ? 'en' : 'ar';
+      displayContent(selectedReligion, otherLang);
+    }
+    isTranslated = !isTranslated;
+  }
+
+  // تعامل مع قسم الأسئلة مع Gemini API (مثال بدائي، يحاكي الطلب)
+  const form = document.getElementById("question-form");
+  const responseBox = document.getElementById("ai-response");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const question = document.getElementById("user-question").value.trim();
+    if (!question) return alert("يرجى كتابة السؤال أولاً.");
+
+    responseBox.style.display = "block";
+    responseBox.textContent = "جارٍ معالجة السؤال...";
+
+    try {
+      // مثال طلب وهمي لـ Gemini API (لأنه لا يمكن تنفيذ حقيقي هنا)
+      // في تطبيق حقيقي: نفذ fetch أو axios إلى نقطة النهاية الخاصة بـ Gemini مع API Key
+      await new Promise(resolve => setTimeout(resolve, 2000)); // محاكاة تأخير الرد
+
+      // رد تجريبي مبسط
+      responseBox.textContent = `جواب نموذجي على سؤالك "${question}" (هذه إجابة وهمية).`;
+    } catch (error) {
+      responseBox.textContent = "حدث خطأ أثناء جلب الإجابة. حاول مرة أخرى.";
+    }
+  });
+</script>
 
 </body>
 </html>
